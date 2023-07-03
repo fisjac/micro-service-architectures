@@ -4,7 +4,7 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-app.use(body.bodyParser.json());
+app.use(bodyParser.json());
 app.use(cors());
 
 
