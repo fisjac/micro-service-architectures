@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: fisjac/event-bus
+          image: fisjac/event-bus:latest
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
