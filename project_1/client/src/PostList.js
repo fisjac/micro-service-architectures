@@ -7,8 +7,10 @@ import CommentList from './CommentList';
 export default function PostList() {
   const [posts, setPosts] = useState({});
   const fetchPosts = async () => {
-    const res = await axios.get('http://dev.test/posts').catch(err=>console.log(err.message));
-    setPosts(res.data);
+    const res = await axios.get('http://dev.test/posts').catch(err=>err);
+    if (res.status == 200) {
+      setPosts(res.data);
+    }
   }
 
   useEffect(()=> {
