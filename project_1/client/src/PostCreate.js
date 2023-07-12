@@ -7,7 +7,7 @@ export default function PostCreate() {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await axios.post('http://dev.test:4000/posts/create', {
+    await axios.post('http://dev.test/posts/create', {
       title
     })
     setTitle('')
