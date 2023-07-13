@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: fisjac/auth
+          image: us.gcr.io/ticketing-dev-392622/auth
 ---
 apiVersion: v1
 kind: Service

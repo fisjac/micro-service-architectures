@@ -6,10 +6,12 @@ deploy:
       - ./infra/k8s/*
 
 build:
-  local:
-    push: false
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: ticketing-dev-392622
   artifacts:
-    - image: fisjac/auth
+    - image: us.gcr.io/ticketing-dev-392622/auth
       context: auth
       docker:
         dockerfile: Dockerfile
