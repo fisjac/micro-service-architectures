@@ -1,6 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import {json} from 'body-parser';
+import mongoose, { connect } from 'mongoose';
 
 import { currentUserRouter } from './routes/current-user';
 import { vanessaRouter } from './routes/vanessa';
@@ -29,6 +30,17 @@ app.all('*', async ()=> {
 // additional middlewares
 app.use(errorHandler);
 
+const start = async () => {
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+    console.log('Connected to MongoDb')
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 app.listen(3000, ()=>{
   console.log('Listening on 3000')
 })
+
+start();
