@@ -11,6 +11,14 @@ build:
   googleCloudBuild:
     projectId: ticketing-dev-392622
   artifacts:
+    - image: us.gcr.io/ticketing-dev-392622/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
     - image: us.gcr.io/ticketing-dev-392622/auth
       context: auth
       docker:
