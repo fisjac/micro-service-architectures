@@ -20,3 +20,49 @@ it('returns a 400 error with an invalid email', async ()=> {
     })
     .expect(400);
 });
+
+it('returns a 400 error with an invalid password', async ()=> {
+  return request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'invalid',
+      password: 'a'
+    })
+    .expect(400);
+});
+
+it('returns a 400 error with missing credentials', async ()=> {
+  return request(app)
+    .post('/api/users/signup')
+    .send({})
+    .expect(400);
+});
+
+
+it('disallows duplicate emails', async ()=> {
+  await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'test@test.com',
+      password: 'password'
+    });
+    await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'test@test.com',
+      password: 'password'
+    })
+    .expect(400);
+})
+
+it('sets cookie on successful signup', async () => {
+  const response = await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'test@test.com',
+      password: 'password'
+    })
+    .expect(201);
+
+    expect(response.get('Set-Cookie')).toBeDefined();
+})
