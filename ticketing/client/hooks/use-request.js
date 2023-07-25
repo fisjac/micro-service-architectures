@@ -14,6 +14,7 @@ export default function useRequest({
     try {
       setErrors(null)
       const res = await axios[method](url, body);
+      console.log('in doRequest, res:', res)
 
       if (onSuccess) {
         onSuccess(res.data)

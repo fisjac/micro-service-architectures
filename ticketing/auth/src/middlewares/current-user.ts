@@ -19,6 +19,8 @@ export const currentUser = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('in currentUser middleware')
+  console.log('request', req.session)
   if (!req.session?.jwt) {
     return res.send({currentUser: null})
   };
