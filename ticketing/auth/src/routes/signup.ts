@@ -25,7 +25,6 @@ router.post('/api/users/signup', [
     if (existingUser) {
       throw new BadRequestError('Email in use')
     };
-    // console.log('Creating a user...');
     const user = User.build({email, password});
     await user.save();
 
