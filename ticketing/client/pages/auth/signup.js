@@ -21,7 +21,7 @@ export default function signup() {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1>signup</h1>
+      <h1>Sign Up</h1>
       <div className='form-group'>
         <label>Email Address</label>
         <input
