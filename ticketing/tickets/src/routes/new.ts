@@ -1,21 +1,20 @@
-import express, {Request, Response, NextFunction} from 'express';
+import express, {Request, Response } from 'express';
+import { body } from 'express-validator';
 
-import { requireAuth, NotAuthorizedError } from '@jf-ticketing/common';
+import { requireAuth, validateRequest } from '@jf-ticketing/common';
 
 const router = express.Router();
 
 router.post('/api/tickets',
-// (req: Request, res: Response, next: NextFunction) => {
-//   // console.log('currentUser in requireAuth middleware:', req.currentUser)
-//   if (!req.currentUser) {
-//     console.log('before throw error')
-//     throw new NotAuthorizedError();
-//   };
-//   next();
-// },
-requireAuth,
-(req: Request, res: Response) => {
+  requireAuth,
+  [
+    body('title').not().isEmpty().withMessage('Title is required'),
+    body('price').isFloat({gt: 0}).withMessage('Price must be greater than zero')
+  ],
+  validateRequest,
+  (req: Request, res: Response) => {
   res.sendStatus(201);
-});
+  }
+);
 
 export {router as createTicketRouter};

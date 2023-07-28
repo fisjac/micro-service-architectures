@@ -19,13 +19,30 @@ it('Post is successful for authenticated users', async () => {
   const response = await request(app)
     .post('/api/tickets')
     .set('Cookie', getCookie())
-    .send({})
+    .send({
+      title: 'Some title',
+      price: 10
+    })
     .expect(201);
   }
 );
-//   const response = await request(app).post('/api/tickets').send({})
-//   expect(response.statusCode).not.toEqual(401);
-// });
 
-// it('throws an error for invalid titles', async ()=> {});
-// it('has route handler listening to /api/tickets', async ()=> {});
+it('throws an error for invalid titles', async ()=> {
+  await request(app)
+    .post('/api/tickets')
+    .set('Cookie', getCookie())
+    .send({
+      title: 'Some Title',
+      price: -10
+    })
+    .expect(400);
+
+    await request(app)
+    .post('/api/tickets')
+    .set('Cookie', getCookie())
+    .send({
+      title: 'Some Title',
+      price: ''
+    })
+    .expect(400);
+});
