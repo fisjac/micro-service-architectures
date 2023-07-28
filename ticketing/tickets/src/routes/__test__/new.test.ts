@@ -16,6 +16,7 @@ it('Post returns 401 for authenticated users', async () => {
 });
 
 it('Post is successful for authenticated users', async () => {
+  // TODO add check for ticket being added to MongoDB
   const response = await request(app)
     .post('/api/tickets')
     .set('Cookie', getCookie())
