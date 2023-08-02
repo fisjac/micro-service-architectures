@@ -1,6 +1,7 @@
 import request from 'supertest';
 import {app} from '../../app';
 import mongoose from 'mongoose';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('Should be listening to put /api/tickets/:id', async()=>{
   const id = new mongoose.Types.ObjectId().toHexString();
@@ -86,4 +87,22 @@ it('Ticket gets updated for valid request', async()=>{
 
   expect(response.body.title).toEqual('new');
   expect(response.body.price).toEqual(20);
+});
+
+it('publishes an event on successful update', async()=>{
+  const cookie = getCookie()
+  const postResponse = await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({title:'old', price:10})
+    .expect(201);
+
+  const response = await request(app)
+    .put(`/api/tickets/${postResponse.body.id}`)
+    .set('Cookie', cookie)
+    .send({title:'new', price:20})
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toBeCalled();
+
 });
