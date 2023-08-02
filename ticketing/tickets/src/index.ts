@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import {randomBytes} from 'crypto';
 
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
