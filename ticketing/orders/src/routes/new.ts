@@ -60,6 +60,7 @@ router.post(
     // Publish an event TODO - build subject for orders
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
+      version: order.version,
       status: order.status,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(),
