@@ -10,6 +10,7 @@ import { Order } from '../../models/order';
 import { OrderCancelledPublisher } from '../publishers/order-cancelled-publisher';
 import { natsWrapper } from '../../nats-wrapper';
 
+export { ExpirationCompleteEvent };
 export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent> {
   readonly subject = Subjects.ExpirationComplete;
   queueGroupName = queueGroupName;
