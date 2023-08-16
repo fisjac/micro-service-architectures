@@ -2,6 +2,7 @@ import { OrderStatus } from '@jf-ticketing/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 
+export { OrderStatus };
 interface OrderAttrs {
   id: string;
   version: number;
