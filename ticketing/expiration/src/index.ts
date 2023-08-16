@@ -1,4 +1,5 @@
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 const start = async () => {
   if (!process.env.NATS_CLIENT_ID) {
@@ -8,7 +9,10 @@ const start = async () => {
     throw new Error('NATS_URL must be defined');
   }
   if (!process.env.NATS_CLUSTER_ID) {
-    throw new Error('MONGO_URI must be defined');
+    throw new Error('CLUSTER_ID must be defined');
+  }
+  if (!process.env.REDIS_HOST) {
+    throw new Error('REDIS_HOST must be defined');
   }
 
   try {
@@ -23,6 +27,8 @@ const start = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new OrderCreatedListener(natsWrapper.client).listen();
   } catch (err) {
     console.error(err);
   }
