@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Router from 'next/router';
+
 import useRequest from '../../hooks/use-request';
 
 export default function NewTicket() {
@@ -17,7 +18,7 @@ export default function NewTicket() {
   });
 
   const onSubmit = (e) => {
-    e.preventDefault;
+    e.preventDefault();
     doRequest();
   };
 
