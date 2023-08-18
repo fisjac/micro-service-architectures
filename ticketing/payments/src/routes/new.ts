@@ -10,6 +10,7 @@ import {
   OrderStatus,
 } from '@jf-ticketing/common';
 import { Order } from '../models/order';
+import { Payment } from '../models/payment';
 import { stripe } from '../stripe';
 
 const router = express.Router();
@@ -32,12 +33,20 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Order has already been canceled');
     }
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       currency: 'usd',
       amount: order.price * 100,
       source: token,
     });
-    res.send(201).send({ success: true });
+
+    const payment = Payment.build({
+      orderId,
+      stripeId: charge.id,
+    });
+
+    await payment.save();
+
+    res.send(201).send(payment);
   }
 );
 
