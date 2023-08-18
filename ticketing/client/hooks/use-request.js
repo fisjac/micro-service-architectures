@@ -5,10 +5,10 @@ export default function useRequest({ url, method, body, onSuccess }) {
   // method must be valid method string
   const [errors, setErrors] = useState(null);
 
-  const doRequest = async () => {
+  const doRequest = async (props = {}) => {
     try {
       setErrors(null);
-      const res = await axios[method](url, body);
+      const res = await axios[method](url, { ...body, ...props });
 
       if (onSuccess) {
         onSuccess(res.data);
