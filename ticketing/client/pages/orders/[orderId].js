@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
+import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
 const OrderShow = ({ order, currentUser }) => {
@@ -10,8 +11,8 @@ const OrderShow = ({ order, currentUser }) => {
     body: {
       orderId: order.id,
     },
-    onSuccess: (payment) => {
-      window.alert('Success');
+    onSuccess: () => {
+      Router.push('/orders');
     },
   });
   useEffect(() => {
@@ -25,7 +26,7 @@ const OrderShow = ({ order, currentUser }) => {
     return () => {
       clearInterval(timerId);
     };
-  }, []);
+  }, [order]);
 
   if (timeLeft < 0) {
     return <div>Order Expired</div>;
@@ -42,6 +43,7 @@ const OrderShow = ({ order, currentUser }) => {
         amount={order.ticket.price * 100}
         email={currentUser.email}
       />
+      {errors}
     </div>
   );
 };
