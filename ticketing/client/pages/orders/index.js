@@ -1,10 +1,17 @@
+import Link from 'next/link';
 const OrderIndex = ({ orders }) => {
   return (
     <ul>
       {orders.map((order) => {
         return (
           <li key={order.id}>
-            {order.ticket.title} - {order.status}
+            <Link
+              className="nav-link"
+              href="/orders/[orderId]"
+              as={`/orders/${order.id}`}
+            >
+              {order.ticket.title} - {order.status}
+            </Link>
           </li>
         );
       })}
