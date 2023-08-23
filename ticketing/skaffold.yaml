@@ -1,7 +1,7 @@
 apiVersion: skaffold/v2alpha3
 kind: Config
 deploy:
-  kubectl:
+  microk8s kubectl:
     manifests:
       - ./infra/k8s/*
 
